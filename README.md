@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Для тебя ❤️</title>
-
 <style>
 body {
     margin: 0;
@@ -16,7 +15,6 @@ body {
     font-family: Arial, sans-serif;
     overflow: hidden;
 }
-
 /* НЕОНОВЫЙ ТЕКСТ */
 h1 {
     color: #ff4dff;
@@ -27,14 +25,12 @@ h1 {
         0 0 10px #ff4dff,
         0 0 20px #ff00ff;
 }
-
 /* КНОПКИ */
 .buttons {
     position: relative;
     width: 300px;
     height: 150px;
 }
-
 button {
     position: absolute;
     font-size: 20px;
@@ -44,7 +40,6 @@ button {
     cursor: pointer;
     transition: 0.2s;
 }
-
 /* ДА */
 #yes {
     left: 20px;
@@ -53,11 +48,9 @@ button {
     color: black;
     box-shadow: 0 0 10px #00ff99;
 }
-
 #yes:hover {
     transform: scale(1.1);
 }
-
 /* НЕТ */
 #no {
     left: 150px;
@@ -66,7 +59,6 @@ button {
     color: white;
     box-shadow: 0 0 10px #ff0066;
 }
-
 /* "ЦВЕТОЧКИ" (светящиеся точки) */
 .flower {
     position: absolute;
@@ -77,7 +69,6 @@ button {
     box-shadow: 0 0 10px #ff00ff;
     animation: float 6s infinite ease-in-out;
 }
-
 @keyframes float {
     0% { transform: translateY(0); opacity: 1; }
     50% { transform: translateY(-100px); opacity: 0.5; }
