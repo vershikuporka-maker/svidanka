@@ -1,85 +1,128 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Для тебя ❤️</title>
+<meta charset="UTF-8">
+<title>Для тебя ❤️</title>
 
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at center, #1a0026, #000);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+}
 
-            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-            font-family: Arial, sans-serif;
-            overflow: hidden;
-        }
+/* НЕОНОВЫЙ ТЕКСТ */
+h1 {
+    color: #ff4dff;
+    font-size: 48px;
+    text-align: center;
+    text-shadow:
+        0 0 5px #ff4dff,
+        0 0 10px #ff4dff,
+        0 0 20px #ff00ff;
+}
 
-        h1 {
-            font-size: 48px;
-            color: white;
-            text-align: center;
-            margin-bottom: 40px;
-        }
+/* КНОПКИ */
+.buttons {
+    position: relative;
+    width: 300px;
+    height: 150px;
+}
 
-        .buttons {
-            position: relative;
-        }
+button {
+    position: absolute;
+    font-size: 20px;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+}
 
-        button {
-            font-size: 20px;
-            padding: 15px 30px;
-            margin: 10px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
+/* ДА */
+#yes {
+    left: 20px;
+    top: 50px;
+    background: #00ff99;
+    color: black;
+    box-shadow: 0 0 10px #00ff99;
+}
 
-        #yes {
-            background-color: #4CAF50;
-            color: white;
-        }
+#yes:hover {
+    transform: scale(1.1);
+}
 
-        #yes:hover {
-            transform: scale(1.1);
-        }
+/* НЕТ */
+#no {
+    left: 150px;
+    top: 50px;
+    background: #ff0066;
+    color: white;
+    box-shadow: 0 0 10px #ff0066;
+}
 
-        #no {
-            background-color: #f44336;
-            color: white;
-            position: absolute;
-        }
-    </style>
+/* "ЦВЕТОЧКИ" (светящиеся точки) */
+.flower {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #ff00ff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #ff00ff;
+    animation: float 6s infinite ease-in-out;
+}
+
+@keyframes float {
+    0% { transform: translateY(0); opacity: 1; }
+    50% { transform: translateY(-100px); opacity: 0.5; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+</style>
 </head>
 
 <body>
 
-    <h1>Пойдешь со мной на свидание? 💖</h1>
+<h1>Пойдешь со мной на свидание? 💖</h1>
 
-    <div class="buttons">
-        <button id="yes">ДА</button>
-        <button id="no">НЕТ</button>
-    </div>
+<div class="buttons">
+    <button id="yes">ДА</button>
+    <button id="no">НЕТ</button>
+</div>
 
-    <script>
-        const noBtn = document.getElementById("no");
+<!-- цветочки -->
+<div class="flower" style="left:10%; top:80%"></div>
+<div class="flower" style="left:30%; top:90%"></div>
+<div class="flower" style="left:70%; top:85%"></div>
+<div class="flower" style="left:90%; top:75%"></div>
 
-        noBtn.addEventListener("mouseover", () => {
-            const x = Math.random() * (window.innerWidth - 100);
-            const y = Math.random() * (window.innerHeight - 50);
+<script>
+const noBtn = document.getElementById("no");
 
-            noBtn.style.left = x + "px";
-            noBtn.style.top = y + "px";
-        });
+noBtn.addEventListener("mouseover", () => {
+    const buttonWidth = noBtn.offsetWidth;
+    const buttonHeight = noBtn.offsetHeight;
 
-        document.getElementById("yes").addEventListener("click", () => {
-            document.body.innerHTML = "<h1>Я знал 😍❤️</h1>";
-        });
-    </script>
+    const maxX = window.innerWidth - buttonWidth;
+    const maxY = window.innerHeight - buttonHeight;
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+});
+
+/* КНОПКА ДА */
+document.getElementById("yes").addEventListener("click", () => {
+    document.body.innerHTML = "<h1 style='color:#00ff99'>Я знал 😍</h1>";
+});
+</script>
 
 </body>
 </html>
