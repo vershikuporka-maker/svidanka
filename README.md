@@ -2,122 +2,133 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+
 <title>Для тебя ❤️</title>
 
 <style>
 body {
     margin: 0;
-    height: 100vh;
-    background: radial-gradient(circle at center, #1a0026, #000);
+    background: #fffdf7;
+    font-family: 'Patrick Hand', cursive;
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
-    font-family: Arial, sans-serif;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
     overflow: hidden;
-    padding: 20px;
 }
 
-/* ТЕКСТ */
-h1 {
-    color: #ff4dff;
+/* ЗАГОЛОВОК */
+.title {
+    font-size: 26px;
     text-align: center;
-    font-size: 28px;
-    text-shadow: 0 0 10px #ff00ff;
+    padding: 20px;
+    border: 3px dashed #333;
+    border-radius: 20px;
+    position: relative;
+}
+
+/* КОТ НАД ТЕКСТОМ */
+.cat-on-title {
+    position: absolute;
+    top: -30px;
+    right: 10px;
+    font-size: 30px;
 }
 
 /* КНОПКИ */
 button {
-    width: 80%;
-    max-width: 320px;
-    padding: 18px;
     margin: 10px;
+    padding: 15px 20px;
     font-size: 18px;
-    border: none;
-    border-radius: 14px;
+    border-radius: 15px;
+    border: 2px solid #333;
+    background: white;
     cursor: pointer;
 }
 
 /* ДА */
 #yes {
-    background: #00ff99;
+    background: #caffbf;
 }
 
 /* НЕТ */
 #no {
-    position: fixed;
-    background: #ff0066;
-    color: white;
+    background: #ffadad;
 }
 
 /* СПИСОК */
 .list {
-    width: 100%;
+    width: 90%;
     max-width: 500px;
+    margin-top: 20px;
 }
 
 .list button {
     width: 100%;
     text-align: left;
-    background: #111;
-    color: white;
-    border: 1px solid #ff00ff;
-    font-size: 16px;
+    margin: 8px 0;
+}
+
+/* КОТИКИ */
+.cat {
+    position: absolute;
+    font-size: 20px;
+    animation: run 10s linear infinite;
+}
+
+@keyframes run {
+    0% { left: -50px; }
+    100% { left: 110%; }
 }
 </style>
 </head>
 
 <body>
 
-<h1 id="title">Пойдешь со мной на свидание? 💖</h1>
+<div class="title">
+    Пойдешь со мной на свидание? 💖
+    <div class="cat-on-title">🐱</div>
+</div>
 
 <button id="yes">ДА</button>
 <button id="no">НЕТ</button>
 
+<!-- БЕГАЮЩИЕ КОТИКИ -->
+<div class="cat" style="top:20%">🐈</div>
+<div class="cat" style="top:50%; animation-delay:2s">🐈‍⬛</div>
+<div class="cat" style="top:70%; animation-delay:4s">🐈</div>
+
 <script>
 const noBtn = document.getElementById("no");
 
-/* 📱 ДЛЯ ПАЛЬЦА (touch) */
-document.addEventListener("touchstart", moveButton);
-document.addEventListener("mousemove", moveButton);
+/* НЕТ УМЕНЬШАЕТСЯ */
+noBtn.addEventListener("click", () => {
+    noBtn.style.transform = "scale(0.2)";
+});
 
-function moveButton(e) {
-    let x, y;
-
-    if (e.touches) {
-        x = e.touches[0].clientX;
-        y = e.touches[0].clientY;
-    } else {
-        x = e.clientX;
-        y = e.clientY;
-    }
-
-    const offset = 100;
-
-    const newX = x + (Math.random() * offset - offset/2);
-    const newY = y + (Math.random() * offset - offset/2);
-
-    noBtn.style.left = newX + "px";
-    noBtn.style.top = newY + "px";
-}
-
-/* ДА → СТРАНИЦА ВЫБОРА */
+/* ДА → СТРАНИЦА */
 document.getElementById("yes").onclick = () => {
 
     document.body.innerHTML = `
-    <h1>Выбирай свидание 💫</h1>
+    <div class="title">Выбирай свидание 🐱</div>
     <div class="list" id="dates"></div>
+
+    <div class="cat" style="top:20%">🐈</div>
+    <div class="cat" style="top:60%; animation-delay:3s">🐈‍⬛</div>
     `;
 
     const ideas = [
         "1. Чтение друг другу книг вслух, с эмоциями, как актеры.",
-        "2. Пешеходная прогулка до рассвета, чтобы встретить солнце вдвоем.",
-        "3. Поиск созвездий и выдумывание собственных легенд о них.",
-        "4. Совместный рисунок на старой простыне или большом ватмане.",
-        "5. Съемка друг друга на камеру, как будто это кино.",
-        "6. Спонтанное интервью друг с другом — будто вы знаменитости.",
-        "7. Сидеть в людном месте и придумывать истории случайных прохожих.",
-        "8. Хочу окультуриваться (музей, театры и т.д)."
+        "2. Пешеходная прогулка до рассвета.",
+        "3. Поиск созвездий и выдумывание легенд.",
+        "4. Совместный рисунок.",
+        "5. Съемка как кино.",
+        "6. Интервью как знаменитости.",
+        "7. Придумывать истории прохожим.",
+        "8. Музей / театр."
     ];
 
     const container = document.getElementById("dates");
@@ -128,8 +139,8 @@ document.getElementById("yes").onclick = () => {
 
         btn.onclick = () => {
             document.body.innerHTML = `
-            <h1>🔥 Отличный выбор!</h1>
-            <button onclick="sendMessage(${index + 1})">
+            <div class="title">💖 Отличный выбор!</div>
+            <button onclick="send(${index+1})">
                 Напиши мне число, время и номер свидания
             </button>
             `;
@@ -139,17 +150,10 @@ document.getElementById("yes").onclick = () => {
     });
 };
 
-/* 📩 ОТПРАВКА */
-function sendMessage(num) {
-    const text = encodeURIComponent(
-        "Я выбираю свидание №" + num + " 💖 Давай обсудим время 😏"
-    );
-
-    /* сюда вставь свой телеграм или whatsapp */
+/* ОТПРАВКА */
+function send(num) {
+    const text = encodeURIComponent("Я выбираю свидание №" + num + " 💖");
     window.location.href = "https://t.me/ВАШ_НИК?text=" + text;
-
-    // альтернатива:
-    // window.location.href = "https://wa.me/XXXXXXXXXXX?text=" + text;
 }
 </script>
 
