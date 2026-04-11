@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Для тебя ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --ink:#4b3526;
+  --panel:rgba(255,255,255,.72);
+  --shadow:0 14px 34px rgba(65,44,23,.16);
+}
+html,body{
+  margin:0;
+  min-height:100%;
+  font-family:'Montserrat',sans-serif;
+  overflow-x:hidden;
+  color:var(--ink);
+}
+body{
+  background:url("bg.jpg") center center/cover no-repeat fixed;
+}
+body::before{
+  content:"";
+  position:fixed; inset:0;
+  background:linear-gradient(to bottom, rgba(255,255,255,.12), rgba(255,255,255,.26));
+  pointer-events:none;
+  z-index:0;
+}
+#app{position:relative; z-index:2; min-height:100vh}
+
+.page{
+  min-height:100vh;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:18px 12px 28px;
+}
+.page.scroll{
+  justify-content:flex-start;
+  padding-top:18px;
+  padding-bottom:42px;
+}
+
+.hero{
+  position:relative;
+  width:min(94vw,560px);
+  aspect-ratio:1024/1536;
+  border-radius:28px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+.hero img.bg{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:cover;
+  user-select:none;
+  pointer-events:none;
+}
+.hero .float-layer{
+  position:absolute; inset:0;
+  animation:bgFloat 7s ease-in-out infinite;
+}
+@keyframes bgFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-7px)}
+}
+
+.banner{
+  position:absolute;
+  left:8%;
+  top:7.5%;
+  width:84%;
+  padding:22px 18px 20px;
+  background:linear-gradient(180deg,#f7ddb0,#f1cb8a);
+  border:4px solid #9c6a35;
+  border-radius:26px;
+  box-shadow:0 8px 20px rgba(0,0,0,.10);
+  text-align:center;
+}
+.banner::before,.banner::after{
+  content:"";
+  position:absolute;
+  top:14px;
+  width:22px; height:calc(100% - 28px);
+  background:linear-gradient(180deg,#e4ba76,#dca85f);
+  border:3px solid #9c6a35;
+}
+.banner::before{left:-12px;border-radius:14px 0 0 14px}
+.banner::after{right:-12px;border-radius:0 14px 14px 0}
+.banner h1{
+  margin:0;
+  font-size:clamp(26px,5.5vw,44px);
+  line-height:1.12;
+  color:#6c4626;
+  text-shadow:0 1px 0 rgba(255,255,255,.35);
+}
+
+.cat-top{
+  position:absolute;
+  left:50%;
+  top:-42px;
+  width:120px;
+  transform:translateX(-50%);
+  z-index:5;
+}
+.cat-top .body{animation:catBreath 2.6s ease-in-out infinite}
+.cat-top .tail{transform-origin:88% 55%; animation:tail 1.1s ease-in-out infinite}
+.cat-top .eye{transform-origin:center; animation:blink 5s infinite}
+@keyframes catBreath{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-3px)}
+}
+@keyframes tail{
+  0%,100%{transform:rotate(-6deg)}
+  50%{transform:rotate(8deg)}
+}
+@keyframes blink{
+  0%,44%,48%,100%{transform:scaleY(1)}
+  46%{transform:scaleY(.08)}
+}
+
+.buttons-row{
+  position:absolute;
+  left:12%;
+  top:58.5%;
+  width:76%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  z-index:6;
+}
+.sketch-btn{
+  position:relative;
+  width:43%;
+  min-height:72px;
+  border-radius:999px;
+  border:4px solid rgba(92,64,39,.82);
+  cursor:pointer;
+  font-family:inherit;
+  font-weight:800;
+  font-size:clamp(24px,5.8vw,38px);
+  letter-spacing:.5px;
+  box-shadow:0 10px 18px rgba(69,40,23,.12);
+  transition:transform .15s ease, opacity .2s ease;
+}
+.sketch-btn:active{transform:scale(.97)}
+.sketch-btn span{position:relative; z-index:2}
+#yesBtn{
+  color:#1b6a17;
+  background:
+    radial-gradient(circle at 28% 25%, rgba(255,255,255,.45), transparent 42%),
+    repeating-linear-gradient(18deg, rgba(126,211,109,.6) 0 4px, rgba(162,232,145,.82) 4px 10px, rgba(116,203,96,.56) 10px 14px);
+  animation:yesPulse 1.6s ease-in-out infinite;
+}
+#noBtn{
+  color:#a63f50;
+  background:
+    radial-gradient(circle at 28% 25%, rgba(255,255,255,.44), transparent 42%),
+    repeating-linear-gradient(-16deg, rgba(255,144,164,.62) 0 4px, rgba(255,186,198,.84) 4px 10px, rgba(255,136,157,.56) 10px 14px);
+  transform-origin:center;
+}
+@keyframes yesPulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.06)}
+}
+.sketch-btn::after{
+  content:"";
+  position:absolute; inset:4px;
+  border-radius:999px;
+  border:2px dashed rgba(91,64,39,.20);
+}
+
+.float-heart{
+  position:absolute;
+  z-index:3;
+  font-size:clamp(18px,4vw,28px);
+  animation:drift 4s ease-in-out infinite;
+  pointer-events:none;
+}
+.float-heart.h1{left:24%; top:49%; animation-delay:-.5s}
+.float-heart.h2{left:49%; top:50%; animation-delay:-1.6s}
+.float-heart.h3{left:67%; top:49%; animation-delay:-2.6s}
+@keyframes drift{
+  0%,100%{transform:translateY(0) scale(1); opacity:.88}
+  50%{transform:translateY(-12px) scale(1.08); opacity:1}
+}
+
+.runner{
+  position:absolute;
+  width:100px;
+  z-index:4;
+  pointer-events:none;
+}
+.runner .body{animation:runnerBob .45s ease-in-out infinite}
+.runner .tail{transform-origin:88% 55%; animation:tail .8s ease-in-out infinite}
+.runner .paw{animation:paw .32s ease-in-out infinite alternate}
+@keyframes runnerBob{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-2px)}
+}
+@keyframes paw{
+  from{transform:translateY(0)}
+  to{transform:translateY(2px)}
+}
+#runner1{left:-18%; top:80%; animation:run1 9.5s linear infinite}
+#runner2{left:-24%; top:86%; width:108px; animation:run2 12.5s linear infinite}
+#scaredCat{
+  left:14%; top:79%;
+  width:96px;
+  transition:left .25s ease, top .25s ease, transform .15s ease;
+}
+@keyframes run1{
+  0%{transform:translateX(0) scaleX(1)}
+  49%{transform:translateX(138vw) scaleX(1)}
+  50%{transform:translateX(138vw) scaleX(-1)}
+  99%{transform:translateX(0) scaleX(-1)}
+  100%{transform:translateX(0) scaleX(1)}
+}
+@keyframes run2{
+  0%{transform:translateX(0) scaleX(1)}
+  49%{transform:translateX(146vw) scaleX(1)}
+  50%{transform:translateX(146vw) scaleX(-1)}
+  99%{transform:translateX(0) scaleX(-1)}
+  100%{transform:translateX(0) scaleX(1)}
+}
+
+.panel{
+  width:min(94vw,560px);
+  background:var(--panel);
+  backdrop-filter:blur(5px);
+  border-radius:28px;
+  box-shadow:var(--shadow);
+  padding:18px 14px;
+}
+.title{
+  margin:0;
+  text-align:center;
+  font-size:clamp(26px,6vw,38px);
+  line-height:1.14;
+  font-weight:800;
+}
+.subtitle{
+  margin:12px auto 0;
+  max-width:460px;
+  text-align:center;
+  font-size:15px;
+  line-height:1.35;
+  font-weight:700;
+  color:#5a4739;
+}
+.list{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-top:18px;
+}
+.choice-btn,.final-btn{
+  width:100%;
+  border:none;
+  border-radius:22px;
+  padding:16px;
+  background:rgba(255,255,255,.94);
+  color:var(--ink);
+  box-shadow:0 10px 20px rgba(0,0,0,.08);
+  font-family:inherit;
+  font-weight:800;
+  font-size:17px;
+  line-height:1.3;
+  cursor:pointer;
+  text-align:center;
+}
+.choice-btn:active,.final-btn:active{transform:scale(.985)}
+.final-btn{
+  margin-top:18px;
+  background:rgba(255,231,141,.95);
+  font-size:18px;
+}
+.note{
+  margin-top:14px;
+  text-align:center;
+  font-size:15px;
+  font-weight:700;
+  color:#5a4739;
+}
+
+.heart-burst{
+  position:fixed;
+  z-index:40;
+  font-size:22px;
+  pointer-events:none;
+  animation:heartUp .9s ease-out forwards;
+}
+@keyframes heartUp{
+  0%{opacity:1; transform:translateY(0) scale(.9)}
+  100%{opacity:0; transform:translateY(-72px) scale(1.24)}
+}
+
+@media (max-width:420px){
+  .buttons-row{top:58.1%; left:11%; width:78%}
+  .sketch-btn{min-height:66px}
+  .runner{width:90px}
+  #runner2{width:98px}
+  #scaredCat{width:88px}
+  .panel{padding:16px 12px}
+  .choice-btn,.final-btn{font-size:16px}
+  .subtitle,.note{font-size:14px}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+const app = document.getElementById('app');
+
+const ideas = [
+  "1. Чтение друг другу книг вслух, с эмоциями, как актеры.",
+  "2. Пешеходная прогулка до рассвета, чтобы встретить солнце вдвоем.",
+  "3. Поиск созвездий и выдумывание собственных легенд о них.",
+  "4. Совместный рисунок на старой простыне или большом ватмане.",
+  "5. Съемка друг друга на камеру, как будто это кино.",
+  "6. Спонтанное интервью друг с другом — будто вы знаменитости.",
+  "7. Сидеть в людном месте и придумывать истории случайных прохожих.",
+  "8. Хочу окультуриваться (музей, театры и т.д)."
+];
+
+function heartBurst(x,y){
+  const h=document.createElement('div');
+  h.className='heart-burst';
+  h.textContent='💖';
+  h.style.left=(x-10)+'px';
+  h.style.top=(y-10)+'px';
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),900);
+}
+document.addEventListener('click',(e)=>heartBurst(e.clientX,e.clientY));
+
+function catSvg(fill, stroke){
+  return `
+  <svg viewBox="0 0 140 96" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <g class="body">
+      <path class="tail" d="M107 47 C126 34, 138 38, 132 54 C126 65, 112 64, 104 56" fill="none" stroke="${stroke}" stroke-width="5" stroke-linecap="round"/>
+      <ellipse cx="66" cy="50" rx="39" ry="23" fill="${fill}" stroke="${stroke}" stroke-width="4.4"/>
+      <circle cx="33" cy="39" r="17" fill="${fill}" stroke="${stroke}" stroke-width="4.4"/>
+      <path d="M19 28 L26 13 L34 28" fill="${fill}" stroke="${stroke}" stroke-width="4.2" stroke-linejoin="round"/>
+      <path d="M34 28 L43 13 L47 30" fill="${fill}" stroke="${stroke}" stroke-width="4.2" stroke-linejoin="round"/>
+      <circle class="eye" cx="29" cy="38" r="2.2" fill="${stroke}"/>
+      <circle class="eye" cx="38" cy="38" r="2.2" fill="${stroke}"/>
+      <path d="M31 44 Q33.5 46 36 44" fill="none" stroke="${stroke}" stroke-width="2.3" stroke-linecap="round"/>
+      <path d="M23 43 H13 M23 46 H12 M43 43 H53 M43 46 H54" stroke="${stroke}" stroke-width="1.9" stroke-linecap="round"/>
+      <path class="paw" d="M48 69 L45 83" stroke="${stroke}" stroke-width="5" stroke-linecap="round"/>
+      <path class="paw" d="M69 70 L67 84" stroke="${stroke}" stroke-width="5" stroke-linecap="round"/>
+      <path class="paw" d="M86 68 L85 82" stroke="${stroke}" stroke-width="5" stroke-linecap="round"/>
+      <path class="paw" d="M101 64 L104 78" stroke="${stroke}" stroke-width="5" stroke-linecap="round"/>
+    </g>
+  </svg>`;
+}
+
+function topCatSvg(){
+  return `
+  <svg viewBox="0 0 180 105" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <g class="body">
+      <path class="tail" d="M136 48 C157 35, 172 40, 165 58 C159 69, 144 68, 134 60" fill="none" stroke="#7a5d3e" stroke-width="5.5" stroke-linecap="round"/>
+      <ellipse cx="95" cy="50" rx="43" ry="22" fill="#f5d38b" stroke="#7a5d3e" stroke-width="4.6"/>
+      <circle cx="57" cy="42" r="20" fill="#f5d38b" stroke="#7a5d3e" stroke-width="4.6"/>
+      <path d="M41 31 L49 13 L59 30" fill="#f5d38b" stroke="#7a5d3e" stroke-width="4.5" stroke-linejoin="round"/>
+      <path d="M57 30 L68 13 L73 33" fill="#f5d38b" stroke="#7a5d3e" stroke-width="4.5" stroke-linejoin="round"/>
+      <circle class="eye" cx="52" cy="41" r="2.5" fill="#7a5d3e"/>
+      <circle class="eye" cx="62" cy="41" r="2.5" fill="#7a5d3e"/>
+      <path d="M54 47 Q57 49 60 47" fill="none" stroke="#7a5d3e" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M44 46 H31 M44 49 H30 M69 46 H81 M69 49 H82" stroke="#7a5d3e" stroke-width="2" stroke-linecap="round"/>
+      <path d="M73 65 Q67 78 56 79" fill="none" stroke="#7a5d3e" stroke-width="5.2" stroke-linecap="round"/>
+      <path d="M96 65 Q94 79 83 82" fill="none" stroke="#7a5d3e" stroke-width="5.2" stroke-linecap="round"/>
+      <path d="M112 64 Q111 79 101 81" fill="none" stroke="#7a5d3e" stroke-width="5.2" stroke-linecap="round"/>
+    </g>
+  </svg>`;
+}
+
+function heroCats(){
+  return `
+    <div class="cat-top">${topCatSvg()}</div>
+    <div class="runner" id="scaredCat">${catSvg('#f5d38b','#7a5d3e')}</div>
+    <div class="runner" id="runner1">${catSvg('#f4cf84','#77573a')}</div>
+    <div class="runner" id="runner2">${catSvg('#a9a9a9','#555')}</div>
+  `;
+}
+
+function page1(){
+  window.scrollTo(0,0);
+  app.innerHTML = `
+    <div class="page">
+      <div class="hero" id="hero">
+        <div class="float-layer">
+          <img class="bg" src="bg.jpg" alt="">
+        </div>
+
+        <div class="banner">
+          ${heroCats()}
+          <h1>Пойдешь со мной на свидание?</h1>
+        </div>
+
+        <div class="float-heart h1">💖</div>
+        <div class="float-heart h2">💛</div>
+        <div class="float-heart h3">💖</div>
+
+        <div class="buttons-row">
+          <button class="sketch-btn" id="yesBtn" type="button"><span>ДА</span></button>
+          <button class="sketch-btn" id="noBtn" type="button"><span>НЕТ</span></button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const hero=document.getElementById('hero');
+  const shy=document.getElementById('scaredCat');
+  const no=document.getElementById('noBtn');
+  let noScale=1;
+
+  document.getElementById('yesBtn').addEventListener('click',(e)=>{
+    e.stopPropagation();
+    page2();
+  });
+
+  no.addEventListener('click',(e)=>{
+    e.stopPropagation();
+    noScale=Math.max(.18,noScale*.62);
+    no.style.transform=`scale(${noScale})`;
+    no.style.opacity=Math.max(.55,noScale+.18);
+  });
+
+  function moveCatAway(clientX,clientY){
+    const rect=hero.getBoundingClientRect();
+    const c=shy.getBoundingClientRect();
+    const cx=c.left+c.width/2;
+    const cy=c.top+c.height/2;
+    const dx=cx-clientX, dy=cy-clientY;
+    const dist=Math.hypot(dx,dy);
+
+    if(dist<130){
+      const nx=dx===0?(Math.random()>.5?1:-1):dx/dist;
+      const ny=dy===0?(Math.random()>.5?1:-1):dy/dist;
+      let left=((c.left-rect.left)/rect.width)*100;
+      let top=((c.top-rect.top)/rect.height)*100;
+      left += nx*10;
+      top += ny*7;
+      left=Math.max(3,Math.min(84,left));
+      top=Math.max(70,Math.min(88,top));
+      shy.style.left=left+'%';
+      shy.style.top=top+'%';
+      shy.style.transform='scale(1.08)';
+      setTimeout(()=>shy.style.transform='',160);
+    }
+  }
+
+  hero.addEventListener('pointermove',(e)=>moveCatAway(e.clientX,e.clientY));
+  hero.addEventListener('touchstart',(e)=>{
+    const t=e.touches[0];
+    if(t) moveCatAway(t.clientX,t.clientY);
+  },{passive:true});
+}
+
+function page2(){
+  window.scrollTo(0,0);
+  app.innerHTML = `
+    <div class="page scroll">
+      <div class="panel">
+        <h2 class="title">Выбирай свидание ✨</h2>
+        <div class="subtitle">Я собрал варианты так, чтобы они были понятными, красивыми и чтобы тебе хотелось выбрать одно прямо сейчас.</div>
+        <div class="list" id="list"></div>
+      </div>
+    </div>
+  `;
+  const list=document.getElementById('list');
+  ideas.forEach((text,i)=>{
+    const btn=document.createElement('button');
+    btn.className='choice-btn';
+    btn.type='button';
+    btn.textContent=text;
+    btn.addEventListener('click',()=>page3(i+1));
+    list.appendChild(btn);
+  });
+}
+
+function page3(num){
+  window.scrollTo(0,0);
+  app.innerHTML = `
+    <div class="page">
+      <div class="panel">
+        <h2 class="title">Отличный выбор 💖</h2>
+        <div class="subtitle">Теперь нажимай кнопку ниже и напиши мне число, время и номер свидания.</div>
+        <button class="final-btn" id="writeBtn" type="button">Напиши мне в Telegram</button>
+        <div class="note">Я уже жду сообщение про свидание №${num} ✨</div>
+      </div>
+    </div>
+  `;
+  document.getElementById('writeBtn').addEventListener('click',()=>send(num));
+}
+
+function send(num){
+  const text=encodeURIComponent("Я выбираю свидание №"+num+" 💖 Пишу число и время.");
+  window.location.href="https://t.me/vers_hik?text="+text;
+}
+
+page1();
+</script>
+</body>
+</html>
