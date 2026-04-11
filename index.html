@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Для тебя ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+:root{
+  --ink:#2f2721;
+  --paper:rgba(255,255,255,.92);
+  --shadow:rgba(47,39,33,.18);
+}
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  font-family: 'Montserrat', sans-serif;
+  background: #f7f0e8;
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+body::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(255,255,255,.15), rgba(255,255,255,.35));
+  pointer-events: none;
+  z-index: 0;
+}
+
+body{
+  background: url("bg.jpg") center center / cover fixed no-repeat;
+}
+
+#app{
+  position: relative;
+  z-index: 2;
+}
+
+.page{
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 14px 28px;
+}
+
+.page.scroll{
+  justify-content: flex-start;
+  padding-top: 24px;
+  padding-bottom: 46px;
+}
+
+.card{
+  width: min(94vw, 560px);
+  background: rgba(255,255,255,.28);
+  backdrop-filter: blur(2px);
+  border-radius: 28px;
+  padding: 10px;
+}
+
+.image-wrap{
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 1024 / 1536;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 18px 40px rgba(0,0,0,.16);
+}
+
+.hero-image{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+}
+
+.hotspot{
+  position: absolute;
+  border-radius: 999px;
+  cursor: pointer;
+  z-index: 8;
+}
+
+#yesZone{
+  left: 13.6%;
+  top: 57.6%;
+  width: 35.2%;
+  height: 8.5%;
+  animation: yesPulse 1.5s ease-in-out infinite;
+}
+
+#yesZone::before{
+  content:"";
+  position:absolute;
+  inset:-5px;
+  border-radius:999px;
+  border: 3px solid rgba(77, 146, 59, .45);
+  box-shadow: 0 0 0 6px rgba(143,226,133,.12);
+}
+
+#noZone{
+  left: 52.5%;
+  top: 57.6%;
+  width: 35.2%;
+  height: 8.5%;
+  transform-origin: center center;
+  transition: transform .18s ease, opacity .18s ease;
+}
+
+#noZone::before{
+  content:"";
+  position:absolute;
+  inset:-5px;
+  border-radius:999px;
+  border: 3px solid rgba(255, 83, 120, .28);
+}
+
+@keyframes yesPulse{
+  0%,100%{ transform: scale(1); }
+  50%{ transform: scale(1.05); }
+}
+
+.floating-heart{
+  position:absolute;
+  font-size: clamp(18px, 4vw, 28px);
+  z-index: 3;
+  animation: drift 3.8s ease-in-out infinite;
+  pointer-events:none;
+}
+
+.floating-heart.h1{ left: 23%; top: 50%; animation-delay: -.6s; }
+.floating-heart.h2{ left: 50%; top: 52%; animation-delay: -1.7s; }
+.floating-heart.h3{ left: 67%; top: 49%; animation-delay: -2.3s; }
+.floating-heart.h4{ left: 40%; top: 71%; animation-delay: -3.1s; }
+
+@keyframes drift{
+  0%,100%{ transform: translateY(0) scale(1); opacity: .85; }
+  50%{ transform: translateY(-12px) scale(1.08); opacity: 1; }
+}
+
+.cat-run{
+  position: absolute;
+  font-size: clamp(28px, 6vw, 42px);
+  z-index: 5;
+  user-select:none;
+  will-change: transform, left, top;
+}
+
+#shyCat{
+  left: 16%;
+  top: 78%;
+  transition: left .28s ease, top .28s ease, transform .16s ease;
+}
+
+#runnerCat{
+  left: -12%;
+  top: 80%;
+  animation: runnerMove 9s linear infinite;
+  pointer-events:none;
+}
+
+@keyframes runnerMove{
+  0%{ transform: translateX(0) scaleX(1); }
+  49%{ transform: translateX(130vw) scaleX(1); }
+  50%{ transform: translateX(130vw) scaleX(-1); }
+  99%{ transform: translateX(0) scaleX(-1); }
+  100%{ transform: translateX(0) scaleX(1); }
+}
+
+.music-btn{
+  position: fixed;
+  right: 12px;
+  top: 12px;
+  z-index: 30;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255,255,255,.88);
+  color: var(--ink);
+  box-shadow: 0 8px 20px rgba(0,0,0,.12);
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.panel{
+  width: min(94vw, 560px);
+  background: rgba(255,255,255,.74);
+  backdrop-filter: blur(5px);
+  border-radius: 28px;
+  padding: 18px 14px 18px;
+  box-shadow: 0 18px 40px rgba(0,0,0,.10);
+}
+
+.title{
+  font-size: clamp(26px, 6vw, 38px);
+  line-height: 1.12;
+  text-align: center;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0;
+}
+
+.subtitle{
+  margin: 12px auto 0;
+  width: min(100%, 460px);
+  text-align: center;
+  line-height: 1.35;
+  font-size: 15px;
+  font-weight: 700;
+  color: #4a4038;
+}
+
+.list{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.choice-btn, .final-btn{
+  width: 100%;
+  border: none;
+  border-radius: 22px;
+  padding: 16px 16px;
+  font-family: inherit;
+  font-weight: 800;
+  line-height: 1.3;
+  font-size: 17px;
+  color: var(--ink);
+  background: rgba(255,255,255,.93);
+  box-shadow: 0 10px 24px rgba(47,39,33,.12);
+  cursor: pointer;
+}
+
+.choice-btn:active, .final-btn:active{
+  transform: scale(.985);
+}
+
+.choice-btn{
+  text-align: center;
+}
+
+.final-btn{
+  background: rgba(255, 231, 141, .95);
+  font-size: 18px;
+  margin-top: 18px;
+}
+
+.note{
+  margin-top: 14px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: #4a4038;
+}
+
+.heart-burst{
+  position: fixed;
+  z-index: 40;
+  font-size: 22px;
+  pointer-events: none;
+  animation: heartUp .9s ease-out forwards;
+}
+
+@keyframes heartUp{
+  0%{ opacity: 1; transform: translateY(0) scale(.9); }
+  100%{ opacity: 0; transform: translateY(-70px) scale(1.24); }
+}
+
+@media (max-width: 420px){
+  .page{ padding-left: 10px; padding-right: 10px; }
+  .panel{ padding-left: 12px; padding-right: 12px; }
+  .choice-btn, .final-btn{ font-size: 16px; }
+  .subtitle{ font-size: 14px; }
+}
+</style>
+</head>
+<body>
+<button class="music-btn" id="musicBtn" aria-label="Включить музыку">♫ музыка</button>
+
+<div id="app"></div>
+
+<audio id="bgMusic" src="romance.wav" loop preload="auto"></audio>
+
+<script>
+const app = document.getElementById('app');
+const music = document.getElementById('bgMusic');
+const musicBtn = document.getElementById('musicBtn');
+
+const ideas = [
+  "1. Чтение друг другу книг вслух, с эмоциями, как актеры.",
+  "2. Пешеходная прогулка до рассвета, чтобы встретить солнце вдвоем.",
+  "3. Поиск созвездий и выдумывание собственных легенд о них.",
+  "4. Совместный рисунок на старой простыне или большом ватмане.",
+  "5. Съемка друг друга на камеру, как будто это кино.",
+  "6. Спонтанное интервью друг с другом — будто вы знаменитости.",
+  "7. Сидеть в людном месте и придумывать истории случайных прохожих.",
+  "8. Хочу окультуриваться (музей, театры и т.д)."
+];
+
+let musicOn = false;
+
+function syncMusicButton(){
+  musicBtn.textContent = music.paused ? "♫ включить музыку" : "♫ музыка";
+}
+
+function tryPlayMusic(){
+  if(musicOn) return;
+  music.volume = 0.5;
+  music.play().then(() => {
+    musicOn = true;
+    syncMusicButton();
+  }).catch(() => {});
+}
+
+musicBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  if(music.paused){
+    music.play().then(() => {
+      musicOn = true;
+      syncMusicButton();
+    }).catch(() => {});
+  } else {
+    music.pause();
+    syncMusicButton();
+  }
+});
+
+document.addEventListener('pointerdown', tryPlayMusic, { once: true });
+
+function heartBurst(x, y){
+  const heart = document.createElement('div');
+  heart.className = 'heart-burst';
+  heart.textContent = '💖';
+  heart.style.left = (x - 10) + 'px';
+  heart.style.top = (y - 10) + 'px';
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 900);
+}
+
+document.addEventListener('click', (e) => {
+  if(e.target.id === 'musicBtn') return;
+  heartBurst(e.clientX, e.clientY);
+});
+
+function page1(){
+  window.scrollTo(0,0);
+  app.innerHTML = `
+    <div class="page">
+      <div class="card">
+        <div class="image-wrap" id="heroWrap">
+          <img class="hero-image" src="bg.jpg" alt="Пойдешь со мной на свидание">
+          <div id="yesZone" class="hotspot" aria-label="Да"></div>
+          <div id="noZone" class="hotspot" aria-label="Нет"></div>
+          <div class="floating-heart h1">💖</div>
+          <div class="floating-heart h2">💛</div>
+          <div class="floating-heart h3">💖</div>
+          <div class="floating-heart h4">💛</div>
+          <div class="cat-run" id="shyCat">🐱</div>
+          <div class="cat-run" id="runnerCat">🐈‍⬛</div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const yes = document.getElementById('yesZone');
+  const no = document.getElementById('noZone');
+  const wrap = document.getElementById('heroWrap');
+  const shyCat = document.getElementById('shyCat');
+  let noScale = 1;
+
+  yes.addEventListener('click', (e) => {
+    e.stopPropagation();
+    page2();
+  });
+
+  no.addEventListener('click', (e) => {
+    e.stopPropagation();
+    noScale = Math.max(0.18, noScale * 0.62);
+    no.style.transform = `scale(${noScale})`;
+    no.style.opacity = Math.max(0.55, noScale + 0.18);
+  });
+
+  function moveCatAway(clientX, clientY){
+    const rect = wrap.getBoundingClientRect();
+    const catRect = shyCat.getBoundingClientRect();
+    const catX = catRect.left + catRect.width / 2;
+    const catY = catRect.top + catRect.height / 2;
+    const dx = catX - clientX;
+    const dy = catY - clientY;
+    const dist = Math.hypot(dx, dy);
+
+    if(dist < 110){
+      const nx = dx === 0 ? (Math.random() > .5 ? 1 : -1) : dx / dist;
+      const ny = dy === 0 ? (Math.random() > .5 ? 1 : -1) : dy / dist;
+
+      let left = ((catRect.left - rect.left) / rect.width) * 100;
+      let top = ((catRect.top - rect.top) / rect.height) * 100;
+
+      left += nx * 10;
+      top += ny * 7;
+
+      left = Math.max(4, Math.min(84, left));
+      top = Math.max(66, Math.min(88, top));
+
+      shyCat.style.left = left + '%';
+      shyCat.style.top = top + '%';
+      shyCat.style.transform = `scale(${1.05 + Math.random()*0.12})`;
+      setTimeout(() => { shyCat.style.transform = ''; }, 160);
+    }
+  }
+
+  wrap.addEventListener('pointermove', (e) => {
+    moveCatAway(e.clientX, e.clientY);
+  });
+
+  wrap.addEventListener('touchstart', (e) => {
+    const t = e.touches[0];
+    if(t) moveCatAway(t.clientX, t.clientY);
+  }, { passive: true });
+}
+
+function page2(){
+  window.scrollTo(0,0);
+  app.innerHTML = `
+    <div class="page scroll">
+      <div class="panel">
+        <h1 class="title">Выбирай свидание ✨</h1>
+        <div class="subtitle">Я собрал варианты так, чтобы они были понятными, красивыми и чтобы тебе хотелось выбрать одно прямо сейчас.</div>
+        <div class="list" id="list"></div>
+      </div>
+    </div>
+  `;
+
+  const list = document.getElementById('list');
+  ideas.forEach((text, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.type = 'button';
+    btn.textContent = text;
+    btn.addEventListener('click', () => page3(i + 1));
+    list.appendChild(btn);
+  });
+}
+
+function page3(num){
+  window.scrollTo(0,0);
+  app.innerHTML = `
+    <div class="page">
+      <div class="panel">
+        <h1 class="title">Отличный выбор 💖</h1>
+        <div class="subtitle">Теперь нажимай кнопку ниже и напиши мне число, время и номер свидания.</div>
+        <button class="final-btn" id="writeBtn" type="button">Напиши мне в Telegram</button>
+        <div class="note">Я уже жду сообщение про свидание №${num} ✨</div>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('writeBtn').addEventListener('click', () => send(num));
+}
+
+function send(num){
+  const text = encodeURIComponent("Я выбираю свидание №" + num + " 💖 Пишу число и время.");
+  window.location.href = "https://t.me/vers_hik?text=" + text;
+}
+
+page1();
+syncMusicButton();
+</script>
+</body>
+</html>
