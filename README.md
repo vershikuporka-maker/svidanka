@@ -13,89 +13,89 @@ body {
     height: 100vh;
     font-family: 'Comic Neue', cursive;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
     overflow: hidden;
 
-    /* КАРАНДАШНЫЙ ФОН */
-    background: repeating-linear-gradient(
-        45deg,
-        #f5f5f5,
-        #f5f5f5 10px,
-        #eeeeee 10px,
-        #eeeeee 20px
-    );
+    /* 🔥 ТВОЙ ФОН */
+    background: url("bg.jpg") no-repeat center/cover;
 }
 
-/* ЗАГОЛОВОК */
+/* затемнение для читаемости */
+body::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.6);
+    z-index: 0;
+}
+
+.page {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    max-width: 420px;
+    text-align: center;
+}
+
 .title {
     font-size: 26px;
-    text-align: center;
     padding: 20px;
-    border: 3px solid #000;
+    border: 3px solid black;
     border-radius: 20px;
-    background: #fff;
-    box-shadow: 4px 4px 0 #000;
+    background: white;
+    box-shadow: 4px 4px 0 black;
+    margin-bottom: 20px;
     position: relative;
 }
 
-/* КОТ НА ЗАГОЛОВКЕ */
 .cat-top {
     position: absolute;
-    top: -30px;
+    top: -25px;
     right: 10px;
-    font-size: 30px;
+    font-size: 28px;
 }
 
-/* КНОПКИ — КАК НАРИСОВАНЫ */
+/* КНОПКИ */
 button {
-    margin: 10px;
-    padding: 15px 20px;
+    width: 100%;
+    margin: 8px 0;
+    padding: 15px;
     font-size: 18px;
     border-radius: 20px;
     border: 3px solid black;
-    background: #fff;
+    background: white;
     box-shadow: 3px 3px 0 black;
     cursor: pointer;
-    transition: 0.1s;
 }
 
 button:active {
     transform: translate(2px,2px);
-    box-shadow: 1px 1px 0 black;
 }
 
-#yes {
-    background: #baffc9;
-}
+#yes { background: #baffc9; }
+#no { background: #ffb3ba; }
 
-#no {
-    background: #ffb3ba;
-}
-
-/* СПИСОК */
-.list {
-    width: 90%;
-    max-width: 500px;
-}
-
-/* КОТИКИ */
+/* 🐱 БЕГАЮЩИЕ КОТИКИ */
 .cat {
     position: absolute;
-    font-size: 24px;
-    cursor: pointer;
-    transition: 0.2s;
+    font-size: 26px;
+    animation: run linear infinite;
 }
 
-.cat:active {
-    transform: scale(1.5) rotate(10deg);
+@keyframes run {
+    0% { transform: translateX(-100px); }
+    100% { transform: translateX(120vw); }
 }
 
-/* СЕРДЕЧКИ */
+/* 💖 СЕРДЕЧКИ */
 .heart {
     position: absolute;
-    color: red;
     animation: float 1s ease-out forwards;
 }
 
@@ -108,123 +108,136 @@ button:active {
 
 <body>
 
-<div class="title">
-    Пойдешь со мной на свидание? 💖
-    <div class="cat-top">🐱</div>
-</div>
+<div id="app"></div>
 
-<button id="yes">ДА</button>
-<button id="no">НЕТ</button>
-
-<!-- КОТИКИ -->
-<div class="cat" style="top:20%; left:10%">🐈</div>
-<div class="cat" style="top:60%; left:70%">🐈‍⬛</div>
+<!-- 🎵 МУЗЫКА -->
+<audio id="music" src="music.mp3" loop></audio>
+<audio id="purr" src="purr.mp3"></audio>
 
 <script>
-const noBtn = document.getElementById("no");
+const app = document.getElementById("app");
 
-/* НЕТ УМЕНЬШАЕТСЯ */
-noBtn.onclick = () => {
-    noBtn.style.transform = "scale(0.2)";
-};
+/* 🎵 запуск музыки при первом касании */
+document.addEventListener("click", () => {
+    document.getElementById("music").play();
+}, { once: true });
 
-/* СЕРДЕЧКИ ПРИ КЛИКЕ */
+/* ---------- СТРАНИЦА 1 ---------- */
+function page1() {
+    app.innerHTML = `
+    <div class="page">
+        <div class="title">
+            Пойдешь со мной на свидание? 💖
+            <div class="cat-top">🐱</div>
+        </div>
+
+        <button id="yes">ДА</button>
+        <button id="no">НЕТ</button>
+    </div>
+
+    ${catsHTML()}
+    `;
+
+    document.getElementById("no").onclick = () => {
+        const btn = document.getElementById("no");
+        btn.style.transform = "scale(0.2)";
+    };
+
+    document.getElementById("yes").onclick = page2;
+
+    initCats();
+}
+
+/* ---------- СТРАНИЦА 2 ---------- */
+function page2() {
+    app.innerHTML = `
+    <div class="page">
+        <div class="title">Выбирай свидание 💫</div>
+        <div id="list"></div>
+    </div>
+
+    ${catsHTML()}
+    `;
+
+    const ideas = [
+        "1. Чтение друг другу книг вслух, с эмоциями, как актеры.",
+        "2. Пешеходная прогулка до рассвета.",
+        "3. Поиск созвездий.",
+        "4. Совместный рисунок.",
+        "5. Съемка как кино.",
+        "6. Интервью.",
+        "7. Истории про прохожих.",
+        "8. Музей / театр."
+    ];
+
+    const list = document.getElementById("list");
+
+    ideas.forEach((text, i) => {
+        const btn = document.createElement("button");
+        btn.innerText = text;
+        btn.onclick = () => page3(i+1);
+        list.appendChild(btn);
+    });
+
+    initCats();
+}
+
+/* ---------- СТРАНИЦА 3 ---------- */
+function page3(num) {
+    app.innerHTML = `
+    <div class="page">
+        <div class="title">💖 Отличный выбор!</div>
+        <button onclick="send(${num})">
+            Напиши мне число, время и номер свидания
+        </button>
+    </div>
+
+    ${catsHTML()}
+    `;
+
+    initCats();
+}
+
+/* 🐱 КОТИКИ HTML */
+function catsHTML() {
+    return `
+    <div class="cat" style="top:20%; animation-duration:8s">🐈</div>
+    <div class="cat" style="top:50%; animation-duration:12s">🐈‍⬛</div>
+    <div class="cat" style="top:80%; animation-duration:10s">🐈</div>
+    `;
+}
+
+/* 🐱 РЕАКЦИЯ КОТОВ + МУРЧАНИЕ */
+function initCats() {
+    document.querySelectorAll(".cat").forEach(cat => {
+        cat.onclick = () => {
+            cat.innerText = "😻";
+            document.getElementById("purr").play();
+
+            setTimeout(() => cat.innerText = "🐱", 500);
+        };
+    });
+}
+
+/* 💖 СЕРДЕЧКИ */
 document.addEventListener("click", (e) => {
     const heart = document.createElement("div");
     heart.className = "heart";
     heart.innerText = "💖";
-
     heart.style.left = e.clientX + "px";
     heart.style.top = e.clientY + "px";
-
     document.body.appendChild(heart);
 
     setTimeout(() => heart.remove(), 1000);
 });
 
-/* КОТИКИ РЕАГИРУЮТ */
-document.querySelectorAll(".cat").forEach(cat => {
-    cat.addEventListener("click", () => {
-        cat.innerText = "😻";
-        setTimeout(() => cat.innerText = "🐱", 500);
-    });
-});
-
-/* ДА → СТРАНИЦА */
-document.getElementById("yes").onclick = () => {
-document.getElementById("yes").onclick = () => {
-
-    document.body.innerHTML = `
-    <div class="page">
-        <div class="title">Выбирай свидание 💫</div>
-        <div class="list" id="dates"></div>
-    </div>
-    `;
-
-    /* ДОБАВЛЯЕМ СТИЛИ ТАКИЕ ЖЕ КАК НА 1 СТРАНИЦЕ */
-    const style = document.createElement("style");
-    style.innerHTML = `
-    .page {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        width: 100%;
-    }
-
-    .list {
-        width: 90%;
-        max-width: 420px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .list button {
-        width: 100%;
-        margin: 8px 0;
-    }
-    `;
-    document.head.appendChild(style);
-
-    const ideas = [
-        "1. Чтение друг другу книг вслух, с эмоциями, как актеры.",
-        "2. Пешеходная прогулка до рассвета, чтобы встретить солнце вдвоем.",
-        "3. Поиск созвездий и выдумывание легенд.",
-        "4. Совместный рисунок.",
-        "5. Съемка как кино.",
-        "6. Интервью как знаменитости.",
-        "7. Придумывать истории прохожим.",
-        "8. Музей / театр."
-    ];
-
-    const container = document.getElementById("dates");
-
-    ideas.forEach((text, index) => {
-        const btn = document.createElement("button");
-        btn.innerText = text;
-
-        btn.onclick = () => {
-            document.body.innerHTML = `
-            <div class="page">
-                <div class="title">💖 Отличный выбор!</div>
-                <button onclick="send(${index+1})">
-                    Напиши мне число, время и номер свидания
-                </button>
-            </div>
-            `;
-        };
-
-        container.appendChild(btn);
-    });
-};
-
-/* ОТПРАВКА */
+/* 📩 ОТПРАВКА */
 function send(num) {
     const text = encodeURIComponent("Я выбираю свидание №" + num + " 💖");
-    window.location.href = "https://t.me/@vers_hik" + text;
+    window.location.href = "https://t.me/ВАШ_НИК?text=" + text;
 }
+
+page1();
 </script>
 
 </body>
