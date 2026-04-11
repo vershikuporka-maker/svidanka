@@ -152,20 +152,50 @@ document.querySelectorAll(".cat").forEach(cat => {
 
 /* ДА → СТРАНИЦА */
 document.getElementById("yes").onclick = () => {
+document.getElementById("yes").onclick = () => {
 
     document.body.innerHTML = `
-    <div class="title">Выбирай свидание 💫</div>
-    <div class="list" id="dates"></div>
+    <div class="page">
+        <div class="title">Выбирай свидание 💫</div>
+        <div class="list" id="dates"></div>
+    </div>
     `;
+
+    /* ДОБАВЛЯЕМ СТИЛИ ТАКИЕ ЖЕ КАК НА 1 СТРАНИЦЕ */
+    const style = document.createElement("style");
+    style.innerHTML = `
+    .page {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        width: 100%;
+    }
+
+    .list {
+        width: 90%;
+        max-width: 420px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .list button {
+        width: 100%;
+        margin: 8px 0;
+    }
+    `;
+    document.head.appendChild(style);
 
     const ideas = [
         "1. Чтение друг другу книг вслух, с эмоциями, как актеры.",
-        "2. Пешеходная прогулка до рассвета.",
-        "3. Поиск созвездий.",
+        "2. Пешеходная прогулка до рассвета, чтобы встретить солнце вдвоем.",
+        "3. Поиск созвездий и выдумывание легенд.",
         "4. Совместный рисунок.",
         "5. Съемка как кино.",
-        "6. Интервью.",
-        "7. Истории про прохожих.",
+        "6. Интервью как знаменитости.",
+        "7. Придумывать истории прохожим.",
         "8. Музей / театр."
     ];
 
@@ -177,10 +207,12 @@ document.getElementById("yes").onclick = () => {
 
         btn.onclick = () => {
             document.body.innerHTML = `
-            <div class="title">💖 Отличный выбор!</div>
-            <button onclick="send(${index+1})">
-                Напиши мне число, время и номер свидания
-            </button>
+            <div class="page">
+                <div class="title">💖 Отличный выбор!</div>
+                <button onclick="send(${index+1})">
+                    Напиши мне число, время и номер свидания
+                </button>
+            </div>
             `;
         };
 
