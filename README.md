@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
@@ -10,39 +11,40 @@
 <style>
 body {
     margin: 0;
-    height: 100vh;
+    min-height: 100vh;
     font-family: 'Comic Neue', cursive;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     flex-direction: column;
-    overflow: hidden;
 
-    /* 🔥 ТВОЙ ФОН */
     background: url("bg.jpg") no-repeat center/cover;
 }
 
-/* затемнение для читаемости */
+/* затемнение */
 body::before {
     content: "";
-    position: absolute;
+    position: fixed;
     width: 100%;
     height: 100%;
     background: rgba(255,255,255,0.6);
     z-index: 0;
 }
 
+/* контейнер */
 .page {
     position: relative;
     z-index: 2;
+    width: 90%;
+    max-width: 420px;
+    margin: 40px auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 90%;
-    max-width: 420px;
     text-align: center;
 }
 
+/* заголовок */
 .title {
     font-size: 26px;
     padding: 20px;
@@ -61,7 +63,7 @@ body::before {
     font-size: 28px;
 }
 
-/* КНОПКИ */
+/* кнопки */
 button {
     width: 100%;
     margin: 8px 0;
@@ -81,11 +83,18 @@ button:active {
 #yes { background: #baffc9; }
 #no { background: #ffb3ba; }
 
-/* 🐱 БЕГАЮЩИЕ КОТИКИ */
+/* список */
+#list {
+    width: 100%;
+    padding-bottom: 40px;
+}
+
+/* коты */
 .cat {
-    position: absolute;
+    position: fixed;
     font-size: 26px;
     animation: run linear infinite;
+    z-index: 1;
 }
 
 @keyframes run {
@@ -93,10 +102,11 @@ button:active {
     100% { transform: translateX(120vw); }
 }
 
-/* 💖 СЕРДЕЧКИ */
+/* сердечки */
 .heart {
-    position: absolute;
+    position: fixed;
     animation: float 1s ease-out forwards;
+    z-index: 3;
 }
 
 @keyframes float {
@@ -110,19 +120,18 @@ button:active {
 
 <div id="app"></div>
 
-<!-- 🎵 МУЗЫКА -->
 <audio id="music" src="music.mp3" loop></audio>
 <audio id="purr" src="purr.mp3"></audio>
 
 <script>
 const app = document.getElementById("app");
 
-/* 🎵 запуск музыки при первом касании */
+/* запуск музыки */
 document.addEventListener("click", () => {
     document.getElementById("music").play();
 }, { once: true });
 
-/* ---------- СТРАНИЦА 1 ---------- */
+/* страница 1 */
 function page1() {
     app.innerHTML = `
     <div class="page">
@@ -139,8 +148,7 @@ function page1() {
     `;
 
     document.getElementById("no").onclick = () => {
-        const btn = document.getElementById("no");
-        btn.style.transform = "scale(0.2)";
+        document.getElementById("no").style.transform = "scale(0.2)";
     };
 
     document.getElementById("yes").onclick = page2;
@@ -148,7 +156,7 @@ function page1() {
     initCats();
 }
 
-/* ---------- СТРАНИЦА 2 ---------- */
+/* страница 2 */
 function page2() {
     app.innerHTML = `
     <div class="page">
@@ -161,13 +169,13 @@ function page2() {
 
     const ideas = [
         "1. Чтение друг другу книг вслух, с эмоциями, как актеры.",
-        "2. Пешеходная прогулка до рассвета.",
-        "3. Поиск созвездий.",
-        "4. Совместный рисунок.",
-        "5. Съемка как кино.",
-        "6. Интервью.",
-        "7. Истории про прохожих.",
-        "8. Музей / театр."
+        "2. Пешеходная прогулка до рассвета, чтобы встретить солнце вдвоем.",
+        "3. Поиск созвездий и выдумывание собственных легенд о них.",
+        "4. Совместный рисунок на старой простыне или большом ватмане.",
+        "5. Съемка друг друга на камеру, как будто это кино.",
+        "6. Спонтанное интервью друг с другом — будто вы знаменитости.",
+        "7. Сидеть в людном месте и придумывать истории случайных прохожих.",
+        "8. Хочу окультуриваться (музей, театры и т.д)."
     ];
 
     const list = document.getElementById("list");
@@ -182,7 +190,7 @@ function page2() {
     initCats();
 }
 
-/* ---------- СТРАНИЦА 3 ---------- */
+/* страница 3 */
 function page3(num) {
     app.innerHTML = `
     <div class="page">
@@ -198,7 +206,7 @@ function page3(num) {
     initCats();
 }
 
-/* 🐱 КОТИКИ HTML */
+/* коты */
 function catsHTML() {
     return `
     <div class="cat" style="top:20%; animation-duration:8s">🐈</div>
@@ -207,19 +215,17 @@ function catsHTML() {
     `;
 }
 
-/* 🐱 РЕАКЦИЯ КОТОВ + МУРЧАНИЕ */
 function initCats() {
     document.querySelectorAll(".cat").forEach(cat => {
         cat.onclick = () => {
             cat.innerText = "😻";
             document.getElementById("purr").play();
-
             setTimeout(() => cat.innerText = "🐱", 500);
         };
     });
 }
 
-/* 💖 СЕРДЕЧКИ */
+/* сердечки */
 document.addEventListener("click", (e) => {
     const heart = document.createElement("div");
     heart.className = "heart";
@@ -231,7 +237,7 @@ document.addEventListener("click", (e) => {
     setTimeout(() => heart.remove(), 1000);
 });
 
-/* 📩 ОТПРАВКА */
+/* отправка */
 function send(num) {
     const text = encodeURIComponent("Я выбираю свидание №" + num + " 💖");
     window.location.href = "https://t.me/ВАШ_НИК?text=" + text;
