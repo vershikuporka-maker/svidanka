@@ -153,7 +153,7 @@ document.getElementById("yes").onclick = () => {
 /* ОТПРАВКА */
 function send(num) {
     const text = encodeURIComponent("Я выбираю свидание №" + num + " 💖");
-    window.location.href = "https://t.me/ВАШ_НИК?text=" + text;
+    window.location.href = "https://t.me/@vers_hik?text=" + text;
 }
 </script>
 
