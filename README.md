@@ -244,6 +244,8 @@ function send(num) {
 
 page1();
 </script>
-
+<style>
+  body { bg.jpg.jpg; }
+</style>
 </body>
 </html>
